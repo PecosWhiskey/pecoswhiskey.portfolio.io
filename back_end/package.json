@@ -199,7 +199,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "init-db": "node init-db.js",
+    "start": "node init-db.js && node server.js"
   },
   "keywords": [],
   "author": "",
