@@ -1,10 +1,13 @@
 const sqlite3 = require('sqlite3').verbose(); //modulo necessario per la creazione del database
+const path = require('path');
 
-const db = new sqlite3.Database("database\\dbBiglietti.sqlite", (err) => {
+const dbPath = path.join(__dirname, 'dbBiglietti.sqlite');
+const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
       console.error('Errore connessione al database BIGLIETTI:', err.message);
     } else {
-      console.log('Connesso al database BIGLIETTI sqlite avvenuta con successo'); 
+      console.log('Connesso al database BIGLIETTI sqlite avvenuta con successo');
+      console.log('Database path:', dbPath); 
       db.run("PRAGMA foreign_keys=ON", (err) => { //attiva i vincoli di integrità referenziale
             if (err) {
                 console.error("Errore nell'attivazione dei FOREIGN KEYS:", err.message);
