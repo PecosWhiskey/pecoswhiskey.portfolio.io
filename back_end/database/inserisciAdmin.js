@@ -42,5 +42,10 @@ async function visualizzaAdmin(){
   }
 }  
 
-inserisciAdmin("susan@gmail.com", "susina");
+// inserisciAdmin("susan@gmail.com", "susina");
 // visualizzaAdmin();
+
+module.exports = {
+  inserisciAdmin,
+  visualizzaAdmin
+};
