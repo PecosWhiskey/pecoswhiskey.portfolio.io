@@ -4,7 +4,7 @@ services:
     env: node
     region: frankfurt  # o oregon se preferisci USA
     plan: free
-    buildCommand: cd back_end && npm install
+    buildCommand: cd back_end && npm install && npm rebuild sqlite3
     startCommand: cd back_end && node server.js
     envVars:
       - key: NODE_ENV
