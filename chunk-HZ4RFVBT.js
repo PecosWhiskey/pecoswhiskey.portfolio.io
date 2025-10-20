@@ -1,0 +1,1 @@
+import{Ea as o}from"./chunk-XN4KXQ72.js";import"./chunk-RW4GY4BD.js";var p=(()=>{let t=class t{constructor(){}ngOnInit(){}};t.\u0275fac=function(n){return new(n||t)},t.\u0275cmp=o({type:t,selectors:[["app-home"]],decls:0,vars:0,template:function(n,r){},encapsulation:2});let e=t;return e})();export{p as HomePage};
