@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { Volo } from '../models/volo.models';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GestioneVoliService {
 
-  private baseUrl = 'http://localhost:3000';
+  private baseUrl = environment.apiUrl;
   //Dati del volo da modificare ottenuti dalla pagina "voli-disponibili"
   private datiVolo = new BehaviorSubject<Volo>({
     idVolo: '', 

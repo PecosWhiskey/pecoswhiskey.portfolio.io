@@ -5,13 +5,14 @@ import { Passeggero } from '../models/passeggero.models';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { Volo } from '../models/volo.models';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BigliettiService {
 
-  private baseUrl = 'http://localhost:3000';
+  private baseUrl = environment.apiUrl;
 
   private numBigliettiCreatiAndata = new BehaviorSubject<number>(0);
   private numBigliettiCreatiRitorno = new BehaviorSubject<number>(0);

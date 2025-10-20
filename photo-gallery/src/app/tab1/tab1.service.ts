@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Volo } from '../models/volo.models';
 import { RicercaInfo } from '../models/ricercaInfo.models';
 import { BehaviorSubject } from 'rxjs'; 
+import { environment } from '../../environments/environment';
 //permette di memorizzare lo stato corrente e aggiornare gli altri tab quando i dati cambiano
 
 @Injectable({
@@ -11,7 +12,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class Tab1Service {
 
-  private baseUrl = 'http://localhost:3000';
+  private baseUrl = environment.apiUrl;
   //Dati inseriti dall'utente per la ricerca dei voli
   private ricercaInfo = new BehaviorSubject<RicercaInfo>({partenza:'', destinazione: '', dataPartenza: '', dataRitorno: ''});
   //Voli di andata e ritorno trovati nel database corrispondenti ai criteri di ricerca
