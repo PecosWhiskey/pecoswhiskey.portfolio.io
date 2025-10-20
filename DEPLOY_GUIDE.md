@@ -56,7 +56,7 @@ JWT_SECRET = [il-tuo-jwt-secret-qui]
 
 1. Clicca "Create Web Service"
 2. Attendi 2-5 minuti per il build
-3. Copia l'URL: `https://pecoswhiskey-backend.onrender.com`
+3. Copia l'URL: `https://pecoswhiskey-portfolio-io-back-end.onrender.com`
 
 ---
 
