@@ -1,0 +1,174 @@
+<ion-header class="custom-header">
+  <ion-toolbar>
+    <div class="header-content">
+      <div class="logo-section">
+        <h1>VayGo</h1>
+        <span class="logo-subtitle">Airlines</span>
+      </div>
+      <div class="header-actions">
+        <ion-button fill="clear" size="small" href="/tabs/tab3">
+          <ion-icon name="person-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="gestione-voli-container">
+
+    <!-- Menu di Navigazione Voli -->
+    <div class="voli-navigation-menu vaygo-fade-in">
+      <div class="menu-header">
+        <h2>Gestione Voli VayGo</h2>
+      </div>
+      <div class="menu-buttons">
+        <ion-button
+          class="menu-button"
+          fill="clear"
+          routerLink="/gestione-voli">
+          <ion-icon name="create-outline"></ion-icon>
+          Gestisci Voli
+        </ion-button>
+        <ion-button
+          class="menu-button"
+          fill="clear"
+          [routerLink]="'/voli-disponibili'">
+          <ion-icon name="list-outline"></ion-icon>
+          Visualizza Voli
+        </ion-button>
+        <ion-button
+          class="menu-button active"
+          fill="clear"
+          [routerLink]="'/prenotazioni'"
+          routerLinkActive="active">
+          <ion-icon name="ticket-outline"></ion-icon>
+          Prenotazioni Ricevute
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Sezione Prenotazioni -->
+    <div class="prenotazioni-container vaygo-fade-in">
+      <div class="section-header">
+        <h2>Prenotazioni Ricevute</h2>
+        <p>Visualizza tutte le prenotazioni effettuate dai clienti</p>
+      </div>
+
+      @if(biglietti.length > 0) {
+        <div class="biglietti-grid">
+          @for(biglietto of biglietti; track $index) {
+            <ion-card class="results-card prenotazione-card">
+              <ion-card-header>
+                <div class="biglietto-header">
+                  <div class="biglietto-id">
+                    <ion-icon name="ticket-outline"></ion-icon>
+                    <span>{{biglietto.idVolo}}</span>
+                  </div>
+                  <div class="biglietto-status">
+                    <ion-badge color="success">Confermato</ion-badge>
+                  </div>
+                </div>
+                <ion-card-title>
+                  <div class="flight-route">
+                    <span class="departure">Partenza</span>
+                    <span class="arrow">✈️</span>
+                    <span class="arrival">Destinazione</span>
+                  </div>
+                </ion-card-title>
+              </ion-card-header>
+
+              <ion-card-content>
+                <div class="biglietto-details">
+                  <div class="detail-row">
+                    <div class="detail-item">
+                      <ion-icon name="calendar-outline"></ion-icon>
+                      <div class="detail-info">
+                        <span class="detail-label">Partenza</span>
+                        <span class="detail-value">{{biglietto.dataPartenza.split(' ')[1]}}</span>
+                      </div>
+                    </div>
+                    <div class="detail-item">
+                      <ion-icon name="time-outline"></ion-icon>
+                      <div class="detail-info">
+                        <span class="detail-label">Arrivo</span>
+                        <span class="detail-value">{{biglietto.dataPartenza.split(' ')[2]}}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  
+                  <div class="detail-row">
+                    <div class="detail-item">
+                      <ion-icon name="calendar-outline"></ion-icon>
+                      <div class="detail-info">
+                        <span class="detail-label">Data</span>
+                        <span class="detail-value">{{biglietto.dataPartenza.split(' ')[0].split("-").reverse().join("-")}}</span>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <div class="detail-row">
+                    <div class="detail-item">
+                      <ion-icon name="person-outline"></ion-icon>
+                      <div class="detail-info">
+                        <span class="detail-label">Passeggero</span>
+                        <span class="detail-value">{{biglietto.idPasseggero}}</span>
+                      </div>
+                    </div>
+                    <div class="detail-item">
+                      <ion-icon name="airplane-outline"></ion-icon>
+                      <div class="detail-info">
+                        <span class="detail-label">Posto</span>
+                        <span class="detail-value">{{biglietto.posto}}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="detail-row">
+                    <div class="detail-item">
+                      <ion-icon name="pricetag-outline"></ion-icon>
+                      <div class="detail-info">
+                        <span class="detail-label">Tariffa</span>
+                        <span class="detail-value">{{biglietto.tariffa}}</span>
+                      </div>
+                    </div>
+                    <div class="detail-item">
+                      <ion-icon name="card-outline"></ion-icon>
+                      <div class="detail-info">
+                        <span class="detail-label">Prezzo</span>
+                        <span class="detail-value price">{{Approssima(biglietto.prezzoFinale)}} €</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="acquisto-info">
+                    <ion-icon name="calendar"></ion-icon>
+                    <span>Acquistato il {{biglietto.dataAcquisto}}</span>
+                  </div>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          }
+        </div>
+      } @else {
+        <div class="empty-state">
+          <div class="empty-icon">
+            <ion-icon name="ticket-outline"></ion-icon>
+          </div>
+          <h3>Nessuna prenotazione trovata</h3>
+          <p>Non sono ancora state effettuate prenotazioni</p>
+        </div>
+      }
+
+      @if(richiestaEsito != '') {
+        <div class="feedback-info">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          <span>{{ richiestaEsito }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</ion-content>

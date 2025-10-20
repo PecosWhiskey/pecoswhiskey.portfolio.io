@@ -1,0 +1,158 @@
+<ion-header [translucent]="true" class="vaygo-header">
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="ricercaInfo.partenza" class="results-content">
+    <ion-card class="search-info-card">
+      <ion-card-header>
+        <ion-card-title>Dettagli ricerca</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Partenza:</strong> {{ ricercaInfo.partenza }}</p>
+        <p><strong>Destinazione:</strong> {{ ricercaInfo.destinazione }}</p>
+        <p><strong>Data andata:</strong> {{ ricercaInfo.dataPartenza }}</p>
+        <p><strong>Data ritorno:</strong> {{ ricercaInfo.dataRitorno }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="filters-card">
+      <ion-card-header>
+        <ion-card-title>Filtri avanzati</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label>Fascia di prezzo</ion-label>
+          <ion-select [(ngModel)]="filtroPrezzo" (ionChange)="applicaFiltri()">
+            <ion-select-option value="tutti">Tutti i prezzi</ion-select-option>
+            <ion-select-option value="economici">Economici (≤ 100€)</ion-select-option>
+            <ion-select-option value="medi">Medi (101€-300€)</ion-select-option>
+            <ion-select-option value="premium">Premium (> 300€)</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <section class="acquista-section">
+          <div class="acquista-section">
+            <ion-button expand="block" class="acquista-button" [routerLink]="'/crea-biglietto'">
+              <ion-icon name="card" slot="start"></ion-icon>
+              Vai all'acquisto
+            </ion-button>
+          </div>
+        </section>
+      </ion-card-content>
+    </ion-card>
+
+    @if(sceltaUtente == 'oneway'){
+      @if(voliTrovatiAndata){
+        @if(bigliettiAndata.length==0){
+          <p>Non sono disponibili voli per queste città</p>
+        }@else{
+          @for(biglietto of bigliettiAndata; track $index; let i=$index){
+            <ion-card class="results-card" [class.selected]="isBigliettoAndataSelezionato(biglietto)">
+              <ion-card-header>
+                <ion-card-title>
+                  <div class="flight-route">
+                    <span class="departure">{{ricercaInfo.partenza}} ({{biglietto.partenza}})</span>
+                    <span class="arrow"></span>
+                    <span class="arrival">{{ricercaInfo.destinazione}} ({{biglietto.destinazione}})</span>
+                  </div>
+                </ion-card-title>
+                <span *ngIf="biglietto.postiDisponibili <= 5" >Ultimi {{biglietto.postiDisponibili}} posti disponibili</span>
+              </ion-card-header>
+              <ion-card-content>
+                <div class="flight-times">
+                  <span class="departure-time">{{biglietto.oraPartenza.split(' ')[1]}}</span>
+                  <span class="time-separator">—</span>
+                  <span class="arrival-time">{{biglietto.oraArrivo.split(' ')[1]}}</span>
+                </div>
+                <div class="price">{{biglietto.prezzo}} €</div>
+                <ion-button (click)="selezionaAndata(biglietto)">Seleziona</ion-button>
+                <ion-button fill="clear" (click)="deselezionaAndata()">Deseleziona</ion-button>
+              </ion-card-content>
+            </ion-card>
+          }
+        }
+      }
+    }@else{
+      @if(voliTrovatiAndata && voliTrovatiRitorno){
+        @if(bigliettiAndata.length==0 && bigliettiRitorno.length==0){
+          <p>Non sono disponibili voli per queste città</p>
+        }
+        @if((bigliettiAndata.length>0 || bigliettiRitorno.length>0)){
+          @if(bigliettiAndata.length>0){
+            @for(biglietto of bigliettiAndata; track $index; let i=$index){
+              <ion-card class="results-card" [class.selected]="isBigliettoAndataSelezionato(biglietto)">
+                <ion-card-header>
+                  <ion-card-title>
+                    <div class="flight-route">
+                      <span class="departure">{{ricercaInfo.partenza}} ({{biglietto.partenza}})</span>
+                      <span class="arrow"></span>
+                      <span class="arrival">{{ricercaInfo.destinazione}} ({{biglietto.destinazione}})</span>
+                    </div>
+                  </ion-card-title>
+                  <span *ngIf="biglietto.postiDisponibili <= 5" >Ultimi posti disponibili</span>
+                </ion-card-header>
+                <ion-card-content>
+                  <div class="flight-times">
+                    <span class="departure-time">{{biglietto.oraPartenza.split(' ')[1]}}</span>
+                    <span class="time-separator">—</span>
+                    <span class="arrival-time">{{biglietto.oraArrivo.split(' ')[1]}}</span>
+                  </div>
+                  <div class="price">{{biglietto.prezzo}} €</div>
+                  <ion-button (click)="selezionaAndata(biglietto)">Seleziona</ion-button>
+                  <ion-button fill="clear" (click)="deselezionaAndata()">Deseleziona</ion-button>
+                </ion-card-content>
+              </ion-card>
+            }
+          }@else {
+            <p>Non sono disponibili voli di andata per queste città!</p>
+          }
+          @if(bigliettiRitorno.length>0){
+            @for(biglietto of bigliettiRitorno; track $index; let i=$index){
+              <ion-card class="results-card" [class.selected]="isBigliettoRitornoSelezionato(biglietto)">
+                <ion-card-header>
+                  <ion-card-title>
+                    <div class="flight-route">
+                      <span class="departure">{{ricercaInfo.destinazione}} ({{biglietto.partenza}})</span>
+                      <span class="arrow"></span>
+                      <span class="arrival">{{ricercaInfo.partenza}} ({{biglietto.destinazione}})</span>
+                    </div>
+                  </ion-card-title>
+                  <span *ngIf="biglietto.postiDisponibili <= 5" >Ultimi posti disponibili</span>
+                </ion-card-header>
+                <ion-card-content>
+                  <div class="flight-times">
+                    <span class="departure-time">{{biglietto.oraPartenza.split(' ')[1]}}</span>
+                    <span class="time-separator">—</span>
+                    <span class="arrival-time">{{biglietto.oraArrivo.split(' ')[1]}}</span>
+                  </div>
+                  <div class="price">{{biglietto.prezzo}} €</div>
+                  <ion-button (click)="selezionaRitorno(biglietto)">Seleziona</ion-button>
+                  <ion-button fill="clear" (click)="deselezionaRitorno()">Deseleziona</ion-button>
+                </ion-card-content>
+              </ion-card>
+            }
+          }@else{
+            <p>Non sono disponibili voli di ritorno per queste città!</p>
+          }
+        }
+      }@else{
+        <div class="feedback-info">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          <span>ERRORE: Dati inseriti per la ricerca non validi!</span>
+        </div>
+      }
+    }
+  </div>
+
+  <div *ngIf="!ricercaInfo.partenza" class="empty-state">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Nessuna ricerca effettuata</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Scegli la meta dei tuoi sogni</p>
+        <ion-button expand="block" [routerLink]="'/tabs/tab1'">Vai alla ricerca</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

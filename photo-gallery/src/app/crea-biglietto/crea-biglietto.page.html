@@ -1,0 +1,88 @@
+<ion-header class="custom-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab1" text="Indietro"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Crea Biglietto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    @for(numero of numeroPasseggeri; track $index; let i=$index){
+      <h1>Inserire i dati del passeggero {{i+1}}</h1>
+      <form #userForm="ngForm">
+
+        <ion-item>
+          <ion-input type="text" name="idPasseggero" [(ngModel)]="passeggeri[i].idPasseggero" placeholder="Codice fiscale del passeggero" ngDefaultControl  required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input type="text" name="nome" [(ngModel)]="passeggeri[i].nome" placeholder="Nome del passeggero" ngDefaultControl  required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input type="text" name="cognome" [(ngModel)]="passeggeri[i].cognome" placeholder="Cognome del passeggero" ngDefaultControl  required></ion-input>
+        </ion-item>
+
+        <ion-item lines="full">
+          <ion-label position="stacked">Data di nascita</ion-label>
+          <ion-input type="date" name="data" [(ngModel)]="passeggeri[i].dataNascita" required ngDefaultControl></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input type="text" name="documentoID" [(ngModel)]="passeggeri[i].documentoID" placeholder="Documento" ngDefaultControl  required></ion-input>
+        </ion-item>
+
+        <ion-button (click)="Acquista(passeggeri[i])" [disabled]="!userForm.valid">Conferma</ion-button>
+
+        @if(richiestaEsito != '') {
+          <div class="feedback-info">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span>{{ richiestaEsito }}</span>
+          </div>
+        }
+
+      </form>
+    }
+
+ <!--Se ci sono entrambi i biglietti allora il numero di biglietti deve essere uguale a quello dei passeggeri sia per andata che per ritorno-->
+ @if(valutaBiglietto(bigliettoAndata) && valutaBiglietto(bigliettoRitorno) && (numBigliettiCreatiAndata == numPasseggeri) && (numBigliettiCreatiRitorno== numPasseggeri)){
+  <h1>Dati riepilogativi dei biglietti</h1>
+  <h3>Ti ricordiamo di salvare il codice del tuo biglietto per effettuare il check-in!</h3>
+  @for(biglietto of bigliettiCreati; track $index){
+  <ion-card class="results-card">
+    <ion-card-header>
+      <ion-card-title>CODICE: {{biglietto.idBiglietto}}    </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Data: {{biglietto.dataPartenza.split(' ')[0].split("-").reverse().join("-")}}</p>
+        <p>Partenza:  {{biglietto.dataPartenza.split(' ')[1]}}</p>
+        <p>Arrivo:  {{biglietto.dataPartenza.split(' ')[2]}}</p>
+        <p>CF: {{biglietto.idPasseggero}}</p>
+        <p>Prezzo complessivo: {{biglietto.prezzoFinale}} €</p>
+        <p>Data di acquisto: {{biglietto.dataAcquisto}}</p>
+      </ion-card-content>
+  </ion-card>
+  }       <!--Altrimenti vorrà dire che sarà stato selezionato solo il biglietto di andata-->
+}@else if(valutaBiglietto(bigliettoAndata) && numBigliettiCreatiAndata==numPasseggeri){
+  <h1>Dati riepilogativi dei biglietti</h1>
+  <h3>Ti ricordiamo di salvare il codice del tuo biglietto per effettuare il check-in!</h3>
+  @for(biglietto of bigliettiCreati; track $index){
+    <ion-card class="results-card">
+      <ion-card-header>
+        <ion-card-title>CODICE: {{biglietto.idBiglietto}}    </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>Data: {{biglietto.dataPartenza.split(' ')[0].split("-").reverse().join("-")}}</p>
+          <p>Partenza:  {{biglietto.dataPartenza.split(' ')[1]}}</p>
+        <p>Arrivo:  {{biglietto.dataPartenza.split(' ')[2]}}</p>
+          <p>CF: {{biglietto.idPasseggero}}</p>
+          <p>Prezzo complessivo: {{biglietto.prezzoFinale}} €</p>
+          <p>Data di acquisto: {{biglietto.dataAcquisto.split("-").reverse().join("-")}}</p>
+        </ion-card-content>
+    </ion-card>
+  }  
+}
+
+</ion-content>

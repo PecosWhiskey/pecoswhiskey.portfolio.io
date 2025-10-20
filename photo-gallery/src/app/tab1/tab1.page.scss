@@ -1,0 +1,699 @@
+//Stile per i due bottoni di incremento e decremento del numero di passeggeri
+.counter__section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+  //Stile per il contenitore della pagina
+  .main-content {
+    --padding-top: 0; // Rimuove padding top per evitare sovrapposizioni
+    --background: var(--vaygo-background);
+    //Definizione di stili per diversi sistemi operativi
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  //Stile per l'header
+  .custom-header {
+    --background: var(--vaygo-white);
+    background: var(--vaygo-white) !important; 
+    box-shadow: 0 2px 8px var(--vaygo-shadow);
+    border-bottom: 1px solid var(--vaygo-border);
+    position: relative;
+    z-index: 1000;
+
+    ion-toolbar {
+      --background: var(--vaygo-white);
+      background: var(--vaygo-white) !important; 
+      --color: var(--vaygo-text-primary);
+      --padding-start: 16px;
+      --padding-end: 16px;
+      --min-height: 56px;
+    }
+  }
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+  }
+
+  .logo-section {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--vaygo-primary);
+      letter-spacing: -0.5px;
+    }
+
+    .logo-subtitle {
+      font-size: 14px;
+      color: var(--vaygo-text-secondary);
+      font-weight: 500;
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 8px;
+
+    ion-button {
+      --color: var(--vaygo-text-secondary);
+      --background-hover: var(--vaygo-blue-light);
+      width: 40px;
+      height: 40px;
+      --border-radius: 12px;
+
+      //Ingrandimento e modifica del colore per il bottone e quindi l'icona
+      &:hover {
+        --color: var(--vaygo-primary);
+        transform: scale(1.05);
+        transition: all 0.3s ease;
+      }
+    }
+  }
+
+  //Hero Section
+  .hero-section {
+    padding: 20px 20px 60px;
+    min-height: 500px;
+    background: url('../assets/Wallpaper_Background.png');
+    background-size: cover; //l'immagine copre interamente l'area mantenendo le proporzioni
+    background-position: center;
+    background-attachment: fixed; //in questo modo l'immagine rimane fissa durante lo scroll della pagina
+    margin-top: 0;
+  }
+  //Stile per i campi input
+  .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr; //un elemento per riga
+    gap: 40px;
+    align-items: center;
+
+    @media (min-width: 768px) {
+      grid-template-columns: 1fr 1fr; //due elementi per riga se la grandezza dello schermo aumenta
+    }
+  }
+
+  .search-card {
+    max-width: 800px;
+    margin: 0 auto;
+    --background: var(--vaygo-white);
+    background: var(--vaygo-white) !important; // Forza lo sfondo opaco
+    border-radius: 20px; 
+    box-shadow: 0 10px 40px var(--vaygo-shadow-medium);
+    border: 1px solid var(--vaygo-border);
+
+    ion-card-content {
+      padding: 32px;
+      background: transparent; // Il contenuto rimane trasparente se la card è opaca
+    }
+  }
+
+.search-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap; //l'elemento va a capo automaticamente se non c'è più spazio nella riga
+  gap: 20px;
+  padding-left: 8px;
+
+  h3 {
+    margin: 0;
+    font-size: clamp(32px, 4vw, 42px); //minimo: 32px, preferito: 4% della larghezza del viewport, massimo: 42px
+    font-weight: 800; 
+    color: var(--vaygo-primary);
+    letter-spacing: -0.8px;
+    position: relative;
+
+    strong {
+      //Per la modalità chiara il testo è colorato seguendo il gradiente
+      background: linear-gradient(135deg, var(--vaygo-primary), var(--vaygo-secondary));
+      background-clip: text; //lo sfondo viene ritagliato sulla forma del testo
+      //Per compatibilità con browser WebKit (Safari, Chrome)
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent; //rende il testo trasparente per mostrare il gradiente
+
+      @media (prefers-color-scheme: dark) {
+        //Per la modalità scura il testo è colorato di un colore uniforme
+        -webkit-text-fill-color: var(--vaygo-primary);
+        background: none; //rimuove il gradiente
+      }
+    }
+
+    //Animazione hover per interattività
+    transition: all 0.3s ease;
+    cursor: default;
+
+    &:hover {
+      transform: translateX(4px);
+      letter-spacing: -0.5px;
+      color: var(--vaygo-secondary);
+    }
+
+    //Elemento decorativo (linea che viene mostrata sotto la parola "Trova")
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0; //allineamento a sinistra
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--vaygo-accent), transparent);
+      border-radius: 2px;
+      opacity: 0.8;
+    }
+  }
+}
+
+// Versione mobile ottimizzata
+@media (max-width: 768px) {
+  .search-header {
+    padding-left: 4px;
+    margin-bottom: 24px;
+
+    h3 {
+      font-size: clamp(28px, 6vw, 36px);
+      letter-spacing: -0.6px;
+    }
+  }
+}
+
+//Stile che riguarda le due opzioni "Andata e ritorno" e "Solo andata"
+.trip-segment {
+  --background: var(--vaygo-blue-light);
+  border-radius: 12px;
+  min-width: 200px;
+
+  ion-segment-button {
+    --indicator-color: var(--vaygo-secondary);
+    --color: var(--vaygo-text-secondary);
+    --color-checked: var(--vaygo-white); //colore se l'elemento è sezionato
+    --background-checked: var(--vaygo-secondary); //sfondo se l'elemento è sezionato
+    border-radius: 8px;
+    margin: 4px;
+    font-weight: 600;
+  }
+}
+
+.search-form {
+  display: grid;
+  gap: 24px;
+}
+
+.location-inputs {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.swap-button {
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    transform: rotate(90deg);
+  }
+
+  .swap-btn {
+    --background: var(--vaygo-green-light);
+    --color: var(--vaygo-primary);
+    width: 48px;
+    height: 48px;
+    --border-radius: 50%;
+  }
+}
+
+.date-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+//Stile per gli input
+.custom-item {
+  --background: var(--vaygo-background);
+  --border-color: var(--vaygo-border);
+  --border-radius: 16px;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --min-height: 64px;
+  border: 1px solid var(--vaygo-border);
+  margin: 4px 0;
+  transition: all 0.2s ease;
+
+  //Stile quando l'input ha il focus
+  &:focus-within {
+    --border-color: var(--vaygo-secondary);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+  }
+
+  ion-icon {
+    color: var(--vaygo-text-secondary);
+    margin-right: 12px;
+  }
+
+  ion-input {
+    --color: var(--vaygo-text-primary);
+    --placeholder-color: var(--vaygo-text-secondary);
+    font-weight: 500;
+  }
+}
+
+.search-button {
+  --background: linear-gradient(135deg, var(--vaygo-primary) 0%, var(--vaygo-secondary) 100%);
+  --color: var(--vaygo-white);
+  --border-radius: 16px;
+  height: 56px;
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 8px;
+  box-shadow: 0 4px 20px rgba(46, 139, 87, 0.3);
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 25px rgba(46, 139, 87, 0.4);
+  }
+}
+
+//Quick Actions
+.quick-actions {
+  padding: 40px 20px;
+}
+
+.actions-grid {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.action-card {
+  background: var(--vaygo-white);
+  padding: 32px 24px;
+  border-radius: 16px;
+  text-align: center;
+  border: 1px solid var(--vaygo-border);
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px var(--vaygo-shadow-medium);
+  }
+
+  .action-icon {
+    font-size: 32px;
+    color: var(--vaygo-secondary);
+    margin-bottom: 16px;
+  }
+
+  h4 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--vaygo-text-primary);
+  }
+
+  p {
+    margin: 0;
+    color: var(--vaygo-text-secondary);
+    font-size: 14px;
+  }
+}
+
+//Destinations Section
+.destinations-section {
+  padding: 60px 20px;
+  background: var(--vaygo-green-light);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 40px;
+
+  h3 {
+    margin: 0 0 12px 0;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--ion-color-medium);
+  }
+
+  p {
+    margin: 0;
+    color: var(--vaygo-text-secondary);
+    font-size: 16px;
+  }
+}
+
+.destinations-scroll {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto; //scrollbar solo quando necessaria
+  padding: 0 20px 20px 0;
+  scroll-snap-type: x mandatory; //scorrimento orizzontale che si ferma su un determinato snap
+
+  &::-webkit-scrollbar {
+    display: none; //rende invisibile la scrollbar nei browser WebKit(Sfari, Chrome)
+  }
+}
+
+.destination-card {
+  min-width: 280px;
+  background: var(--vaygo-white);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px var(--vaygo-shadow);
+  scroll-snap-align: start; //ogni card rappresenta uno snap
+  transition: transform 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.02); //ingrandisce le immagini
+  }
+
+  .destination-image {
+    height: 200px;
+    background-size: cover; //l'immagine si adatta al contenitore ritagliandosi se necessario
+    background-position: center;
+    &.paris {background-image: url('../assets/Paris.png');}
+    &.london {background-image: url('../assets/London.png');}
+    &.barcelona {background-image: url('../assets/Barcellona.png');}
+    &.amsterdam {background-image: url('../assets/Amsterdam.png');}
+    &.rome {background-image: url('../assets/Rome.png');}
+    &.palermo {background-image: url('../assets/Palermo.png');}
+    &.milan {background-image: url('../assets/Milan.png');}
+  }
+
+  .destination-info {
+    padding: 20px;
+
+    h4 {
+      margin: 0 0 4px 0;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--vaygo-text-primary);
+    }
+
+    p {
+      margin: 0;
+      color: var(--vaygo-primary);
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+}
+
+//Features
+.features-section {
+  padding: 60px 20px;
+}
+
+.features-grid {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+}
+
+.feature-card {
+  text-align: center;
+
+  .feature-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--vaygo-blue-light), var(--vaygo-green-light));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+
+    ion-icon {
+      font-size: 36px;
+      color: var(--vaygo-primary);
+    }
+  }
+
+  h4 {
+    margin: 0 0 12px 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--vaygo-text-primary);
+  }
+
+  p {
+    margin: 0;
+    color: var(--vaygo-text-secondary);
+    line-height: 1.6;
+  }
+}
+
+//Newsletter
+.newsletter-section {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, var(--vaygo-secondary), var(--vaygo-primary));
+}
+
+.newsletter-content {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+
+  h3 {
+    margin: 0 0 12px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--vaygo-white);
+  }
+
+  p {
+    margin: 0 0 32px 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+  }
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap; //se non c'è più spazio gli elementi vanno a capo automaticamente senza comprimersi in un'unica riga
+
+  .email-input {
+    flex: 1; //occupa tutto la spazio disponibile rimanente nel contenitore
+    --background: var(--vaygo-white);
+    --border-radius: 12px;
+    --padding-start: 20px;
+    min-width: 200px;
+
+    ion-input {
+      --color: var(--vaygo-text-primary);
+      --placeholder-color: var(--vaygo-text-secondary);
+    }
+  }
+
+  .subscribe-btn {
+    --background: rgba(255, 255, 255, 0.2);
+    --color: var(--vaygo-white);
+    --border-radius: 12px;
+    font-weight: 600;
+    min-width: 120px;
+
+    &:hover {
+      --background: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+
+    .email-input, .subscribe-btn {
+      width: 100%;
+    }
+  }
+}
+
+//Gestione schermi più piccoli
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 16px 16px 40px;
+    min-height: 400px;
+  }
+
+  .search-card ion-card-content {
+    padding: 24px;
+  }
+
+  .actions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+//Stile per tema scuro
+@media (prefers-color-scheme: dark) {
+  .custom-header {
+    --background: var(--vaygo-white);
+    background: var(--vaygo-white) !important;
+
+    ion-toolbar {
+      --background: var(--vaygo-white);
+      background: var(--vaygo-white) !important;
+    }
+  }
+}
+
+//Animazioni per l'utente che ha selezionato la riduzuione delle animazioni nel sistema
+@media (prefers-reduced-motion: reduce) {
+  .header-actions ion-button,
+  .search-header h3 {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Stili personalizzati per il selettore di date
+ion-popover {
+  --background: var(--vaygo-white);
+  --border-radius: 20px;
+  --box-shadow: 0 10px 40px var(--vaygo-shadow-medium);
+  --backdrop-opacity: 0.3;
+  border: 1px solid var(--vaygo-border);
+
+  ion-datetime {
+    --background: var(--vaygo-white);
+    --background-rgb: 255, 255, 255;
+  }
+}
+
+// Stili per l'item che contiene il trigger del popover
+.custom-item {
+  --background: var(--vaygo-background);
+  --border-color: var(--vaygo-border);
+  --border-radius: 16px;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --min-height: 64px;
+  border: 1px solid var(--vaygo-border);
+  margin: 4px 0;
+  transition: all 0.2s ease;
+
+  ion-icon {
+    color: var(--vaygo-text-secondary);
+    margin-right: 12px;
+    font-size: 20px;
+  }
+
+  ion-input {
+    --color: var(--vaygo-text-primary);
+    --placeholder-color: var(--vaygo-text-secondary);
+    font-weight: 500;
+    cursor: pointer;
+
+    // Input readonly per il trigger
+    &[readonly] {
+      cursor: pointer;
+      pointer-events: all; //vengono abilitati tutti gli eventi, come focus, hover, click, ecc.
+    }
+  }
+}
+
+// Animazioni per il popover
+ion-popover.date-popover {
+  --backdrop-opacity: 0.4;
+
+  //Animazione per la classe aggiunta da Ionic quando il popover si sta aprendo
+  &.popover-entering {
+    ion-datetime {
+      animation: slideInUp 0.3s ease-out;
+    }
+  }
+
+  //Animazione per la classe aggiunta da Ionic quando il popover si sta chiudendo
+  &.popover-leaving {
+    ion-datetime {
+      animation: slideOutDown 0.2s ease-in;
+    }
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+//Stile tema scuro
+@media (prefers-color-scheme: dark) {
+  ion-popover {
+    --background: var(--vaygo-white);
+
+    ion-datetime {
+      --background: var(--vaygo-white);
+
+      .datetime-buttons {
+        background: var(--vaygo-background);
+      }
+    }
+  }
+}
+
+//Gestione schermi più piccoli piccoli
+@media (max-width: 768px) {
+  ion-popover {
+    --width: 95%;
+    --max-width: 350px;
+
+    ion-datetime {
+      .datetime-buttons {
+        padding: 12px;
+
+        ion-button {
+          height: 40px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

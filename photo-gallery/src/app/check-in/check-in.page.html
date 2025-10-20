@@ -1,0 +1,402 @@
+<ion-header class="custom-header">
+  <ion-toolbar>
+    <div class="header-content">
+      <div class="logo-section">
+        <h1>VayGo</h1>
+        <span class="logo-subtitle">Airlines</span>
+      </div>
+      <div class="header-actions">
+        <ion-button fill="clear" size="small" href="/tabs/tab3">
+          <ion-icon name="person-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="gestione-voli-container">
+
+    <!-- Menu di Navigazione Cliente -->
+    <div class="voli-navigation-menu vaygo-fade-in">
+      <div class="menu-header">
+        <h2>I Miei Viaggi VayGo</h2>
+      </div>
+      <div class="menu-buttons">
+        <ion-button
+          class="menu-button"
+          fill="clear"
+          routerLink="/tabs/tab1">
+          <ion-icon name="search-outline"></ion-icon>
+          Cerca Voli
+        </ion-button>
+        <ion-button
+          class="menu-button"
+          fill="clear"
+          routerLink="/biglietti-acquistati">
+          <ion-icon name="card-outline"></ion-icon>
+          I Miei Biglietti
+        </ion-button>
+        <ion-button
+          class="menu-button active"
+          fill="clear"
+          routerLink="/check-in"
+          routerLinkActive="active">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+          Check-in
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Sezione Check-in -->
+    <div class="prenotazioni-container vaygo-fade-in">
+      <div class="section-header">
+        <h2>Check-in Online</h2>
+        <p>Completa il check-in per il tuo volo</p>
+      </div>
+
+      @if(!found) {
+        <!-- Form di ricerca biglietto -->
+        <div class="checkin-search">
+          <form #searchForm="ngForm" class="search-form">
+            <div class="form-section">
+              <h3 class="section-title">
+                <ion-icon name="search-outline"></ion-icon>
+                Trova il tuo biglietto
+              </h3>
+
+              <div class="input-group">
+                <ion-item class="custom-item" [class.item-has-value]="idBiglietto > 0">
+                  <ion-icon name="ticket-outline" slot="start"></ion-icon>
+                  <ion-input
+                    type="number"
+                    name="idBiglietto"
+                    [(ngModel)]="idBiglietto"
+                    placeholder="Codice del biglietto"
+                    label="Codice Biglietto"
+                    label-placement="stacked"
+                    ngDefaultControl
+                    required>
+                  </ion-input>
+                </ion-item>
+              </div>
+
+              <div class="input-group">
+                <ion-item class="custom-item" [class.item-has-value]="idPasseggero">
+                  <ion-icon name="person-outline" slot="start"></ion-icon>
+                  <ion-input
+                    type="text"
+                    name="idPasseggero"
+                    [(ngModel)]="idPasseggero"
+                    placeholder="Codice fiscale del passeggero"
+                    label="Codice Fiscale"
+                    label-placement="stacked"
+                    ngDefaultControl
+                    required>
+                  </ion-input>
+                </ion-item>
+              </div>
+
+              <ion-button
+                expand="block"
+                class="search-button"
+                [disabled]="!searchForm.valid"
+                (click)="Cerca()">
+                <ion-icon name="search-outline" slot="start"></ion-icon>
+                Cerca Biglietto
+              </ion-button>
+
+              <ion-alert
+                [isOpen]="isAlertOpen"
+                header="Hai già fatto il check-in di questo biglietto!"
+                [buttons]="alertButtons"
+                (didDismiss)="setOpen(false)">
+              </ion-alert>
+            </div>
+          </form>
+
+          @if(richiestaEsito != '' && richiestaEsito != "Check-in già fatto!") {
+            <div class="feedback-info">
+              <ion-icon name="information-circle-outline"></ion-icon>
+              <span>{{ richiestaEsito }}</span>
+            </div>
+          }
+        </div>
+      }
+
+      @if(found) {
+        <!-- Form di check-in -->
+        <div class="checkin-form">
+          <div class="success-message">
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+            <span>Biglietto trovato! Completa il check-in</span>
+          </div>
+
+          <form #checkinForm="ngForm" class="checkin-form-content">
+            <div class="form-section">
+              <h3 class="section-title">
+                <ion-icon name="pricetag-outline"></ion-icon>
+                Seleziona Tariffa
+              </h3>
+
+              <div class="input-group">
+                <ion-item class="custom-item">
+                  <ion-icon name="pricetag-outline" slot="start"></ion-icon>
+                  <ion-select
+                    name="tariffa"
+                    [(ngModel)]="tariffa"
+                    placeholder="Scegli la tariffa"
+                    label="Tipo di Tariffa"
+                    label-placement="stacked"
+                    required>
+                    <ion-select-option value="standard">Standard (1x)</ion-select-option>
+                    <ion-select-option value="flex">Flex (1.5x)</ion-select-option>
+                    <ion-select-option value="plus">Plus (2x)</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="section-title">
+                <ion-icon name="airplane-outline"></ion-icon>
+                Seleziona Posto
+              </h3>
+
+              <!-- Link per visualizzare la mappa dei posti -->
+              <div class="seat-map-link">
+                <ion-button fill="outline" size="small" (click)="openSeatMap()">
+                  <ion-icon name="map-outline" slot="start"></ion-icon>
+                  Visualizza Mappa Posti
+                </ion-button>
+              </div>
+
+              <div class="input-group">
+                <ion-item class="custom-item" [class.item-has-value]="sceltaPosto">
+                  <ion-icon name="location-outline" slot="start"></ion-icon>
+                  <ion-input
+                    type="text"
+                    name="posto"
+                    [(ngModel)]="sceltaPosto"
+                    placeholder="es. 12A, 15C..."
+                    label="Posto a Sedere"
+                    label-placement="stacked"
+                    ngDefaultControl
+                    required>
+                  </ion-input>
+                </ion-item>
+              </div>
+            </div>
+
+            <ion-button
+              expand="block"
+              class="checkin-button"
+              [disabled]="!checkinForm.valid"
+              (click)="CheckIn()">
+              <ion-icon name="checkmark-done-outline" slot="start"></ion-icon>
+              Completa Check-in
+            </ion-button>
+
+              <ion-alert
+                [isOpen]="isFoundedAlertOpen"
+                header="Oops! Hai inserito un posto non valido!"
+                message="Ti preghiamo di scegliere un altro posto, grazie"
+                [buttons]="alertFoundedButtons"
+                (didDismiss)="setOpenNotFounded(false)">
+              </ion-alert>
+
+              <ion-alert
+                [isOpen]="isAlertOpen"
+                header="Oops! Il posto che hai scelto è già occupato"
+                message="Ti preghiamo di scegliere un altro posto, grazie"
+                [buttons]="alertButtons"
+                (didDismiss)="setOpen(false)">
+              </ion-alert>
+          </form>
+
+          @if(richiestaEsito != '') {
+            <div class="feedback-info">
+              <ion-icon name="information-circle-outline"></ion-icon>
+              <span>{{ richiestaEsito }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Modale per biglietto modificato -->
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Check-in Completato!</h2>
+          <ion-button fill="clear" (click)="closeModal()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </div>
+
+        <div class="ticket-card">
+          <div class="ticket-header">
+            <ion-icon name="airplane" color="primary"></ion-icon>
+            <h3>{{bigliettoModificato.partenza}} → {{bigliettoModificato.destinazione}}</h3>
+          </div>
+
+          <div class="ticket-details">
+            <div class="detail-section">
+              <div class="detail-item">
+                <ion-icon name="location-outline"></ion-icon>
+                <div>
+                  <span class="label">Partenza</span>
+                  <span class="value">{{bigliettoModificato.aeroportoPartenza?.idAeroporto}} - {{bigliettoModificato.aeroportoPartenza?.nome}}</span>
+                </div>
+              </div>
+
+              <div class="detail-item">
+                <ion-icon name="location"></ion-icon>
+                <div>
+                  <span class="label">Destinazione</span>
+                  <span class="value">{{bigliettoModificato.aeroportoDestinazione?.idAeroporto}} - {{bigliettoModificato.aeroportoDestinazione?.nome}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-section">
+              <div class="detail-item">
+                <ion-icon name="calendar-outline"></ion-icon>
+                <div>
+                  <span class="label">Data e Orario Partenza</span>
+                  <span class="value">{{bigliettoModificato.dataPartenza?.split(' ')[0]?.split("-")?.reverse()?.join("-")}} - {{bigliettoModificato.dataPartenza?.split(' ')[1]}}</span>
+                </div>
+              </div>
+
+              <div class="detail-item">
+                <ion-icon name="time-outline"></ion-icon>
+                <div>
+                  <span class="label">Orario Arrivo</span>
+                  <span class="value">{{bigliettoModificato.dataPartenza?.split(' ')[2]}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-section">
+              <div class="detail-item">
+                <ion-icon name="person-outline"></ion-icon>
+                <div>
+                  <span class="label">Passeggero</span>
+                  <span class="value">{{bigliettoModificato.nomePasseggero}} {{bigliettoModificato.cognomePasseggero}}</span>
+                </div>
+              </div>
+
+              <div class="detail-item">
+                <ion-icon name="pricetag-outline"></ion-icon>
+                <div>
+                  <span class="label">Tariffa</span>
+                  <span class="value">{{bigliettoModificato.tariffa}}</span>
+                </div>
+              </div>
+
+              <div class="detail-item">
+                <ion-icon name="airplane-outline"></ion-icon>
+                <div>
+                  <span class="label">Posto</span>
+                  <span class="value">{{bigliettoModificato.posto}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="price-section">
+              <div class="price-item">
+                <span class="price-label">Prezzo Totale</span>
+                <span class="price-value">{{Approssima(bigliettoModificato.prezzoFinale)}} €</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Modale per la mappa dei posti -->
+  <ion-modal [isOpen]="isSeatMapOpen" (didDismiss)="closeSeatMap()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Mappa Posti Aereo</ion-title>
+          <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="closeSeatMap()">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="seat-map-modal">
+        <div class="seat-map-container">
+          <div class="seat-map-header">
+            <h3>Disposizione Posti Aeromobile</h3>
+            <p>Seleziona il posto che preferisci per il tuo viaggio</p>
+            <div class="scroll-hint">
+              <ion-icon name="arrow-down-outline"></ion-icon>
+              <span>Scorri per vedere tutti i posti</span>
+            </div>
+          </div>
+
+          <div class="seat-map-display">
+            <img src="assets/seat_map.png" alt="Mappa disposizione posti aereo" />
+          </div>
+
+          <div class="seat-legend">
+            <div class="flight-info">
+              <h4>Codice Biglietto: {{idBiglietto}}</h4>
+            </div>
+
+            <div class="seat-stats">
+              <div class="stat-item available-stat">
+                <div class="stat-icon available">
+                  <ion-icon name="checkmark-circle"></ion-icon>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-number">{{getPostiDisponibili()}}</span>
+                  <span class="stat-label">Posti Disponibili</span>
+                </div>
+              </div>
+
+              <div class="stat-item occupied-stat">
+                <div class="stat-icon occupied">
+                  <ion-icon name="close-circle"></ion-icon>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-number">{{postiOccupati.length}}</span>
+                  <span class="stat-label">Posti Occupati</span>
+                </div>
+              </div>
+
+              <div class="stat-item total-stat">
+                <div class="stat-icon total">
+                  <ion-icon name="airplane"></ion-icon>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-number">{{CAPIENZA_AEREO}}</span>
+                  <span class="stat-label">Posti Totali</span>
+                </div>
+              </div>
+            </div>
+
+            @if(postiOccupati.length > 0) {
+              <div class="occupied-seats">
+                <h5>Posti Occupati:</h5>
+                <div class="occupied-list">
+                  @for(posto of postiOccupati; track $index) {
+                    <span class="occupied-seat">{{posto.posto}}</span>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

@@ -1,0 +1,384 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+@import "@ionic/angular/css/ionic.bundle.css";
+
+
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import '@ionic/angular/css/palettes/dark.system.css';
+
+
+// VayGo Airlines - Global Styles
+// ===========================================
+
+// CSS Variables - Brand Colors & Design System
+:root {
+    // Primary Brand Colors
+    --vaygo-primary: #2E8B57;           // Verde SeaGreen principale
+    --vaygo-secondary: #4A90E2;         // Blu soft
+    --vaygo-accent: #34D399;            // Verde accento
+    --vaygo-tertiary: #8B5CF6;          // Viola per accenti speciali
+
+    // Light Variations
+    --vaygo-blue-light: #E0F2FE;        // Blu chiarissimo
+    --vaygo-green-light: #ECFDF5;       // Verde chiarissimo
+    --vaygo-purple-light: #F3E8FF;      // Viola chiarissimo
+
+    // Text Colors
+    --vaygo-text-primary: #1F2937;      // Testo principale
+    --vaygo-text-secondary: #6B7280;    // Testo secondario
+    --vaygo-text-muted: #9CA3AF;        // Testo sbiadito
+
+    // Background & Surface Colors
+    --vaygo-background: #FAFAFA;        // Background principale
+    --vaygo-white: #FFFFFF;             // Bianco puro
+    --vaygo-surface: #F9FAFB;           // Superficie alternativa
+
+    // Shadow & Border
+    --vaygo-shadow: rgba(0, 0, 0, 0.04);
+    --vaygo-shadow-medium: rgba(0, 0, 0, 0.08);
+    --vaygo-shadow-strong: rgba(0, 0, 0, 0.12);
+    --vaygo-border: rgba(0, 0, 0, 0.06);
+    --vaygo-border-medium: rgba(0, 0, 0, 0.12);
+
+    // Status Colors
+    --vaygo-success: #10B981;           // Verde successo
+    --vaygo-warning: #F59E0B;           // Arancione warning
+    --vaygo-error: #EF4444;             // Rosso errore
+    --vaygo-info: #3B82F6;              // Blu informativo
+
+    // Gradients
+    --vaygo-gradient-primary: linear-gradient(135deg, var(--vaygo-primary) 0%, var(--vaygo-secondary) 100%);
+    --vaygo-gradient-accent: linear-gradient(135deg, var(--vaygo-accent) 0%, var(--vaygo-tertiary) 100%);
+    --vaygo-gradient-surface: linear-gradient(135deg, var(--vaygo-blue-light) 0%, var(--vaygo-green-light) 100%);
+
+    // Spacing System
+    --vaygo-spacing-xs: 4px;
+    --vaygo-spacing-sm: 8px;
+    --vaygo-spacing-md: 16px;
+    --vaygo-spacing-lg: 24px;
+    --vaygo-spacing-xl: 32px;
+    --vaygo-spacing-2xl: 48px;
+
+    // Border Radius
+    --vaygo-radius-sm: 8px;
+    --vaygo-radius-md: 12px;
+    --vaygo-radius-lg: 16px;
+    --vaygo-radius-xl: 20px;
+    --vaygo-radius-2xl: 24px;
+
+    // Typography
+    --vaygo-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --vaygo-font-size-xs: 12px;
+    --vaygo-font-size-sm: 14px;
+    --vaygo-font-size-base: 16px;
+    --vaygo-font-size-lg: 18px;
+    --vaygo-font-size-xl: 20px;
+    --vaygo-font-size-2xl: 24px;
+    --vaygo-font-size-3xl: 32px;
+
+    // Transitions
+    --vaygo-transition-fast: 0.15s ease;
+    --vaygo-transition-base: 0.3s ease;
+    --vaygo-transition-slow: 0.5s ease;
+  }
+
+  // Global Reset & Base Styles
+  // ===========================================
+  * {
+    box-sizing: border-box; //riguarda il calcolo della dimesione di tutti gli elementi html
+  }                         //il valore di width comprenderà anche padding che border
+
+  body {
+    font-family: var(--vaygo-font-family);
+    background-color: var(--vaygo-background);
+    color: var(--vaygo-text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased; //font più sottile (per Safari e Chrome)
+    -moz-osx-font-smoothing: grayscale;  //font meno colorato ai bordi (Firefox mcOs)
+  }
+
+  // Ionic Component Overrides
+  // ===========================================
+
+  // Content Background
+  ion-content {
+    --background: var(--vaygo-background);
+    font-family: var(--vaygo-font-family);
+  }
+
+  // Tab Bar Styling
+  ion-tab-bar {
+    --background: var(--vaygo-white);
+    --border: 1px solid var(--vaygo-border);
+    box-shadow: 0 -2px 10px var(--vaygo-shadow);
+
+    ion-tab-button {
+      --color: var(--vaygo-text-secondary);
+      --color-selected: var(--vaygo-primary); //colore per elemento selezionato e attivo
+      --ripple-color: rgba(46, 139, 87, 0.1); //colore per l'effetto ripple
+
+      ion-icon {
+        font-size: 24px;
+      }
+
+      ion-label {
+        font-size: var(--vaygo-font-size-xs);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 4px;
+      }
+    }
+  }
+
+  // Header Styling
+  ion-header {
+    &.vaygo-header {
+      --background: var(--vaygo-white);
+      box-shadow: 0 2px 8px var(--vaygo-shadow);
+      border-bottom: 1px solid var(--vaygo-border);
+
+      ion-toolbar {
+        --background: transparent;
+        --color: var(--vaygo-text-primary);
+        --border-color: transparent;
+        padding: 0 var(--vaygo-spacing-lg);
+
+        ion-title {
+          font-size: var(--vaygo-font-size-xl);
+          font-weight: 700;
+          color: var(--vaygo-primary);
+          letter-spacing: -0.5px;
+        }
+
+        ion-back-button {
+          --color: var(--vaygo-primary);
+          --icon-font-size: 24px;
+        }
+
+        ion-buttons ion-button {
+          --color: var(--vaygo-text-secondary);
+          --background-hover: var(--vaygo-blue-light);
+          --border-radius: var(--vaygo-radius-md);
+        }
+      }
+    }
+  }
+
+  // Card Styling
+  ion-card {
+    &.vaygo-card {
+      --background: var(--vaygo-white);
+      border-radius: var(--vaygo-radius-lg);
+      box-shadow: 0 4px 20px var(--vaygo-shadow);
+      border: 1px solid var(--vaygo-border);
+      margin: var(--vaygo-spacing-md);
+
+      ion-card-header {
+        padding: var(--vaygo-spacing-lg) var(--vaygo-spacing-xl) var(--vaygo-spacing-md);
+
+        ion-card-title {
+          font-size: var(--vaygo-font-size-lg);
+          font-weight: 600;
+          color: var(--vaygo-text-primary);
+          margin: 0;
+        }
+
+        ion-card-subtitle {
+          color: var(--vaygo-text-secondary);
+          font-size: var(--vaygo-font-size-sm);
+          margin: 4px 0 0 0;
+        }
+      }
+
+      ion-card-content {
+        padding: var(--vaygo-spacing-xl);
+        color: var(--vaygo-text-secondary);
+        line-height: 1.5;
+      }
+    }
+  }
+
+  // Button Styling
+  ion-button {
+    &.vaygo-btn-primary {
+      --background: var(--vaygo-gradient-primary);
+      --color: var(--vaygo-white);
+      --border-radius: var(--vaygo-radius-md);
+      font-weight: 600;
+      text-transform: none;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 16px rgba(46, 139, 87, 0.3);
+      transition: all var(--vaygo-transition-base);
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(46, 139, 87, 0.4);
+      }
+    }
+
+    &.vaygo-btn-secondary {
+      --background: transparent;
+      --color: var(--vaygo-primary);
+      --border-radius: var(--vaygo-radius-md);
+      --border-width: 2px;
+      --border-color: var(--vaygo-primary);
+      font-weight: 600;
+      text-transform: none;
+      transition: all var(--vaygo-transition-base);
+
+      &:hover {
+        --background: var(--vaygo-primary);
+        --color: var(--vaygo-white);
+      }
+    }
+
+    &.vaygo-btn-ghost {
+      --background: var(--vaygo-green-light);
+      --color: var(--vaygo-primary);
+      --border-radius: var(--vaygo-radius-md);
+      font-weight: 600;
+      text-transform: none;
+
+      &:hover {
+        --background: var(--vaygo-blue-light);
+        --color: var(--vaygo-secondary);
+      }
+    }
+  }
+
+  // Input Styling
+  ion-item {
+    &.vaygo-input {
+      --background: var(--vaygo-white);
+      --border-color: var(--vaygo-border);
+      --border-radius: var(--vaygo-radius-md);
+      --padding-start: var(--vaygo-spacing-lg);
+      --padding-end: var(--vaygo-spacing-lg);
+      --min-height: 56px;
+      border: 1px solid var(--vaygo-border);
+      margin: var(--vaygo-spacing-xs) 0;
+      transition: all var(--vaygo-transition-fast);
+
+      &.item-has-focus {
+        --border-color: var(--vaygo-secondary);
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+      }
+
+      ion-input {
+        --color: var(--vaygo-text-primary);
+        --placeholder-color: var(--vaygo-text-secondary);
+        font-weight: 500;
+      }
+
+      ion-select {
+        --color: var(--vaygo-text-primary);
+        --placeholder-color: var(--vaygo-text-secondary);
+        font-weight: 500;
+      }
+
+      ion-icon {
+        color: var(--vaygo-text-secondary);
+        margin-right: var(--vaygo-spacing-md);
+      }
+    }
+  }
+
+  // Badge Styling
+  ion-badge {
+    &.vaygo-badge {
+      --background: var(--vaygo-success);
+      --color: var(--vaygo-white);
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: var(--vaygo-radius-sm);
+      font-size: var(--vaygo-font-size-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+
+      &.badge-warning {
+        --background: var(--vaygo-warning);
+      }
+
+      &.badge-error {
+        --background: var(--vaygo-error);
+      }
+
+      &.badge-info {
+        --background: var(--vaygo-info);
+      }
+    }
+  }
+
+  .vaygo-fade-in {
+    animation: vaygoFadeIn 0.6s ease-out;
+  }
+
+  //Quando si accede alla pagina il contenitore compare partendo dal basso fino ad arrivare alla posizione di base
+  @keyframes vaygoFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // Accessibility
+  // ===========================================
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  // Dark Mode Style
+  // ===========================================
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --vaygo-background: #111827;
+      --vaygo-white: #1F2937;
+      --vaygo-text-primary: #F9FAFB;
+      --vaygo-text-secondary: #D1D5DB;
+      --vaygo-border: rgba(255, 255, 255, 0.1);
+      --vaygo-shadow: rgba(0, 0, 0, 0.3);
+      --vaygo-shadow-medium: rgba(0, 0, 0, 0.4);
+    }
+  }

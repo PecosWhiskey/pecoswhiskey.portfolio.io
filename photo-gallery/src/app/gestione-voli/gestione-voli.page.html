@@ -1,0 +1,243 @@
+<ion-header class="custom-header">
+  <ion-toolbar>
+    <div class="header-content">
+      <div class="logo-section">
+        <h1>VayGo</h1>
+        <span class="logo-subtitle">Airlines</span>
+      </div>
+      <div class="header-actions">
+        <ion-button fill="clear" size="small" href="/tabs/tab3">
+          <ion-icon name="person-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="gestione-voli-container">
+
+    <!-- Menu di Navigazione Voli -->
+    <div class="voli-navigation-menu vaygo-fade-in">
+      <div class="menu-header">
+        <h2>Gestione Voli VayGo</h2>
+      </div>
+      <div class="menu-buttons">
+        <ion-button
+          class="menu-button active"
+          fill="clear"
+          routerLink="/gestione-voli"
+          routerLinkActive="active">
+          <ion-icon name="create-outline"></ion-icon>
+          Gestisci Voli
+        </ion-button>
+        <ion-button
+          class="menu-button"
+          fill="clear"
+          [routerLink]="'/voli-disponibili'">
+          <ion-icon name="list-outline"></ion-icon>
+          Visualizza Voli
+        </ion-button>
+        <ion-button
+          class="menu-button"
+          fill="clear"
+          [routerLink]="'/prenotazioni'">
+          <ion-icon name="ticket-outline"></ion-icon>
+          Prenotazioni Ricevute
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Form Container -->
+    <div class="form-container vaygo-fade-in">
+      <div class="section-header">
+        <h2>Gestione Voli</h2>
+        <p>Crea o modifica i voli della flotta VayGo Airlines</p>
+      </div>
+
+      <form #userForm="ngForm" class="volo-form">
+
+        <!-- Sezione Identificazione Volo -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <ion-icon name="airplane-outline"></ion-icon>
+            Identificazione Volo
+          </h3>
+          <div class="input-group full-width">
+            <ion-item class="custom-item" [class.item-has-value]="idVolo">
+              <ion-icon name="barcode-outline" slot="start"></ion-icon>
+              <ion-input
+                type="text"
+                name="idVolo"
+                [(ngModel)]="idVolo"
+                placeholder="ID volo (es. VG0015, VG0027...)"
+                ngDefaultControl
+                required>
+              </ion-input>
+            </ion-item>
+          </div>
+        </div>
+
+        <!-- Sezione Destinazioni -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <ion-icon name="location-outline"></ion-icon>
+            Destinazioni
+          </h3>
+          <div class="input-group">
+            <ion-item class="custom-item" [class.item-has-value]="partenza">
+              <ion-icon name="airplane-outline" slot="start"></ion-icon>
+              <ion-input
+                type="text"
+                name="partenza"
+                [(ngModel)]="partenza"
+                placeholder="Aeroporto di partenza (es. MXP)"
+                ngDefaultControl
+                required>
+              </ion-input>
+            </ion-item>
+            <ion-item class="custom-item" [class.item-has-value]="destinazione">
+              <ion-icon name="location-outline" slot="start"></ion-icon>
+              <ion-input
+                type="text"
+                name="destinazione"
+                [(ngModel)]="destinazione"
+                placeholder="Aeroporto di destinazione (es. FCA)"
+                ngDefaultControl
+                required>
+              </ion-input>
+            </ion-item>
+          </div>
+        </div>
+
+        <!-- Sezione Data e Orari -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <ion-icon name="calendar-outline"></ion-icon>
+            Pianificazione Temporale
+          </h3>
+          <div class="input-group full-width">
+            <ion-item class="custom-item datetime-item" [class.item-has-value]="data">
+              <ion-icon name="calendar-outline" slot="start"></ion-icon>
+              <ion-datetime
+                presentation="date"
+                name="data"
+                [(ngModel)]="data"
+                ngDefaultControl
+                placeholder="Seleziona la data del volo">
+              </ion-datetime>
+            </ion-item>
+          </div>
+          <div class="input-group">
+            <ion-item class="custom-item time-item" [class.item-has-value]="oraPartenza">
+              <ion-icon name="time-outline" slot="start"></ion-icon>
+              <ion-input
+                type="time"
+                name="oraPartenza"
+                [(ngModel)]="oraPartenza"
+                placeholder="Orario di partenza"
+                ngDefaultControl
+                required>
+              </ion-input>
+            </ion-item>
+            <ion-item class="custom-item time-item" [class.item-has-value]="oraArrivo">
+              <ion-icon name="time-outline" slot="start"></ion-icon>
+              <ion-input
+                type="time"
+                name="oraArrivo"
+                [(ngModel)]="oraArrivo"
+                placeholder="Orario di arrivo"
+                ngDefaultControl
+                required>
+              </ion-input>
+            </ion-item>
+          </div>
+        </div>
+
+        <!-- Sezione Dettagli Commerciali -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <ion-icon name="card-outline"></ion-icon>
+            Dettagli Commerciali
+          </h3>
+          <div class="input-group">
+            <ion-item class="custom-item price-item" [class.item-has-value]="prezzo > 0">
+              <ion-icon name="card-outline" slot="start"></ion-icon>
+              <ion-input
+                type="number"
+                name="prezzo"
+                [(ngModel)]="prezzo"
+                placeholder="Prezzo del biglietto (€)"
+                ngDefaultControl
+                required
+                min="0"
+                step="0.01">
+              </ion-input>
+            </ion-item>
+            <ion-item class="custom-item" [class.item-has-value]="postiDisponibili > 0">
+              <ion-icon name="people-outline" slot="start"></ion-icon>
+              <ion-input
+                type="number"
+                name="postiDisponibili"
+                [(ngModel)]="postiDisponibili"
+                placeholder="Posti disponibili"
+                ngDefaultControl
+                required
+                min="1"
+                max="500">
+              </ion-input>
+            </ion-item>
+          </div>
+        </div>
+
+        <!-- Pulsanti di Azione -->
+        <div class="action-buttons">
+          <ion-button
+            type="submit"
+            class="action-button primary"
+            [disabled]="!userForm.valid"
+            (click)="CreaVolo()">
+            <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+            Crea Volo
+          </ion-button>
+
+          <ion-button
+            type="submit"
+            class="action-button secondary"
+            [disabled]="!userForm.valid"
+            (click)="ModificaVolo()">
+            <ion-icon name="create-outline" slot="start"></ion-icon>
+            Modifica Volo
+          </ion-button>
+        </div>
+
+        <!-- Messaggi di Feedback -->
+        @if(creaVoloEsito != '') {
+          <div class="feedback-info">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span>{{ creaVoloEsito }}</span>
+          </div>
+        }
+
+      </form>
+
+      <!-- Alerts -->
+      <ion-alert
+        [isOpen]="isAlertOpenCreated"
+        header="Creazione avvenuta con successo!"
+        message='"È possibile visualizzare il volo appena creato nella pagina "Visualizza Voli"'
+        [buttons]="alertButtons"
+        (didDismiss)="setOpenCreated(false)">
+      </ion-alert>
+
+      <ion-alert
+        [isOpen]="isAlertOpenModified"
+        header="Modifica avvenuta con successo!"
+        message='È possibile visualizzare il volo appena modificato nella pagina "Visualizza Voli"'
+        [buttons]="alertButtons"
+        (didDismiss)="setOpenModified(false)">
+      </ion-alert>
+
+    </div>
+  </div>
+</ion-content>

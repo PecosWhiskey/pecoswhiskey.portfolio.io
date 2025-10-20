@@ -1,0 +1,66 @@
+// For information on how to create your own theme, please see:
+// http://ionicframework.com/docs/theming/
+
+// Variabili tema chiaro (default)
+:root {
+  // Colori primari
+  --vaygo-primary: #2E8B57;
+  --vaygo-secondary: #4A90E2;
+  --vaygo-accent: #34D399;
+
+  // Colori di sfondo chiari
+  --vaygo-blue-light: #E0F2FE;
+  --vaygo-green-light: #ECFDF5;
+  --vaygo-background: #FAFAFA;
+  --vaygo-white: #FFFFFF;
+
+  // Colori del testo chiari
+  --vaygo-text-primary: #1F2937;
+  --vaygo-text-secondary: #6B7280;
+
+  // Effetti e bordi chiari
+  --vaygo-shadow: rgba(0, 0, 0, 0.04);
+  --vaygo-shadow-medium: rgba(0, 0, 0, 0.08);
+  --vaygo-border: rgba(0, 0, 0, 0.06);
+
+  // Colori di stato
+  --vaygo-success: #10B981;
+  --vaygo-warning: #F59E0B;
+}
+
+// Variabili tema scuro
+@media (prefers-color-scheme: dark) {
+  :root {
+    // Colori primari adattati per il tema scuro
+    --vaygo-primary: #34D399;
+    --vaygo-secondary: #60A5FA;
+    --vaygo-accent: #2E8B57;
+
+    // Colori di sfondo scuri
+    --vaygo-blue-light: #1E3A8A;
+    --vaygo-green-light: #064E3B;
+    --vaygo-background: #111827;
+    --vaygo-white: #1F2937;
+
+    // Colori del testo scuri
+    --vaygo-text-primary: #F9FAFB;
+    --vaygo-text-secondary: #D1D5DB;
+
+    // Effetti e bordi scuri
+    --vaygo-shadow: rgba(0, 0, 0, 0.3);
+    --vaygo-shadow-medium: rgba(0, 0, 0, 0.5);
+    --vaygo-border: rgba(255, 255, 255, 0.1);
+
+    // Colori di stato per tema scuro
+    --vaygo-success: #34D399;
+    --vaygo-warning: #FBBF24;
+  }
+}
+
+// Stili di base globali
+ion-content {
+  --background: var(--vaygo-background);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--vaygo-text-primary);
+}
+

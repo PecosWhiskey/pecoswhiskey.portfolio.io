@@ -1,0 +1,285 @@
+<ion-header class="custom-header">
+  <ion-toolbar>
+    <div class="header-content">
+      <div class="logo-section">
+        <h1>VayGo</h1>
+        <span class="logo-subtitle">Airlines</span>
+      </div>
+      <div class="header-actions">
+        <ion-button fill="clear" size="small" href="/tabs/tab3">
+          <ion-icon name="person-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="main-content">
+  <!-- Search Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="search-card">
+        <ion-card-content>
+          <div class="search-header">
+            <h3>Trova <strong>il tuo volo perfetto</strong></h3>
+            <ion-segment [(ngModel)]="scelta" (ionChange)="onClick()" class="trip-segment">
+              <ion-segment-button value="roundtrip">
+                <ion-label>Andata e Ritorno</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="oneway">
+                <ion-label>Solo Andata</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </div>
+          <div class="search-form">
+            <div class="location-inputs">
+              <div class="input-group">
+                <ion-item class="custom-item">
+                  <ion-icon name="location-outline" slot="start"></ion-icon>
+                  <ion-input name="partenza" placeholder="Da dove parti?" label="Partenza" label-placement="stacked" [(ngModel)]="partenza" required></ion-input>
+                </ion-item>
+              </div>
+
+              <div class="swap-button">
+                <ion-button fill="clear" size="small" class="swap-btn" (click)="invertiCitta()">
+                  <ion-icon name="swap-horizontal"></ion-icon>
+                </ion-button>
+              </div>
+
+              <div class="input-group">
+                <ion-item class="custom-item">
+                  <ion-icon name="location" slot="start"></ion-icon>
+                  <ion-input name="destinazione" placeholder="Dove vuoi andare?" label="Destinazione" label-placement="stacked" [(ngModel)]="destinazione" required></ion-input>
+                </ion-item>
+              </div>
+            </div>
+
+            <div class="date-inputs">
+              <div class="input-group">
+                <ion-item class="custom-item" id="click-trigger-partenza">
+                  <ion-icon name="calendar-outline" slot="start"></ion-icon>
+                  <ion-input
+                  name="dataPartenza"
+                    [value]="dataInseritaP.split('T')[0]"
+                    readonly
+                    placeholder="Seleziona data"
+                    label="Partenza"
+                    label-placement="stacked"
+                    aria-label="Seleziona data di partenza">
+                  </ion-input>
+                </ion-item>
+                <ion-popover
+                  trigger="click-trigger-partenza"
+                  triggerAction="click"
+                  showBackdrop="true"
+                  class="date-popover">
+                  <ng-template>
+                    <ion-datetime
+                    name="dataP"
+                      class="data"
+                      [showDefaultButtons]="true"
+                      doneText="Fatto"
+                      cancelText="Chiudi"
+                      presentation="date"
+                      name="dataPartenza"
+                      [(ngModel)]="dataInseritaP"
+                      ngDefaultControl>
+                    </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </div>
+
+              @if(scelta == 'roundtrip' || scelta == 'nessun selezionato'){
+                <div class="input-group">
+                  <ion-item class="custom-item" id="click-trigger-ritorno">
+                    <ion-icon name="calendar" slot="start"></ion-icon>
+                    <ion-input
+                      name="dataArrivo"
+                      [value]="dataInseritaR.split('T')[0]"
+                      readonly
+                      placeholder="Seleziona data"
+                      label="Ritorno"
+                      label-placement="stacked"
+                      aria-label="Seleziona data di ritorno">
+                    </ion-input>
+                  </ion-item>
+                  <ion-popover
+                    trigger="click-trigger-ritorno"
+                    triggerAction="click"
+                    showBackdrop="true"
+                    class="date-popover">
+                    <ng-template>
+                      <ion-datetime
+                      name="dataA"
+                        class="data"
+                        [showDefaultButtons]="true"
+                        doneText="Fatto"
+                        cancelText="Chiudi"
+                        presentation="date"
+                        name="dataRitorno"
+                        [(ngModel)]="dataInseritaR"
+                        ngDefaultControl>
+                      </ion-datetime>
+                    </ng-template>
+                  </ion-popover>
+                </div>
+              }
+            </div>
+
+            <h4>
+              <ion-icon name="people-outline" slot="start"></ion-icon>
+              Numero di Passeggeri
+            </h4>
+            <div class="counter__section">
+              <ion-button class="search-button" [disabled]="numPasseggeri <= 0" (click)="decrement()">-</ion-button>
+              <p>{{numPasseggeri}}</p>
+              <ion-button class="search-button" (click)="increment()">+</ion-button>
+            </div>
+
+            <ion-button expand="block" class="search-button" [disabled]="!CampiValidi()" (click)="Cerca()" [routerLink]="'/tabs/tab2'">
+              <ion-icon name="search" slot="start"></ion-icon>
+              Cerca Voli
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Actions -->
+  <section class="quick-actions">
+    <div class="actions-grid">
+      <div class="action-card">
+        <ion-button fill="clear" size="small" href="/check-in">
+        <ion-icon name="checkmark-circle-outline" class="action-icon"></ion-icon>
+        </ion-button>
+        <h4 [routerLink]="'/check-in'">Check-in Online</h4>
+        <p>Veloce e conveniente</p>
+      </div>
+      <div class="action-card">
+        <ion-icon name="bag-outline" class="action-icon"></ion-icon>
+        <h4>Stato Volo</h4>
+        <p>Informazioni in tempo reale</p>
+      </div>
+      <div class="action-card">
+        <ion-button fill="clear" size="small" href="/biglietti-acquistati">
+          <ion-icon name="card-outline" class="action-icon"></ion-icon>
+        </ion-button>
+        <h4 [routerLink]="'/biglietti-acquistati'">Le Mie Prenotazioni</h4>
+        <p>Gestisci i tuoi viaggi</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Destinations Section -->
+  <section class="destinations-section">
+    <div class="section-header">
+      <h3>Destinazioni Popolari</h3>
+      <p>Scopri le mete più amate dai nostri viaggiatori</p>
+    </div>
+
+    <div class="destinations-scroll">
+      <div class="destination-card">
+        <div class="destination-image paris"></div>
+        <div class="destination-info">
+          <h4>Parigi</h4>
+          <p>da €89</p>
+        </div>
+      </div>
+
+      <div class="destination-card">
+        <div class="destination-image london"></div>
+        <div class="destination-info">
+          <h4>Londra</h4>
+          <p>da €119</p>
+        </div>
+      </div>
+
+      <div class="destination-card">
+        <div class="destination-image barcelona"></div>
+        <div class="destination-info">
+          <h4>Barcellona</h4>
+          <p>da €79</p>
+        </div>
+      </div>
+
+      <div class="destination-card">
+        <div class="destination-image amsterdam"></div>
+        <div class="destination-info">
+          <h4>Amsterdam</h4>
+          <p>da €99</p>
+        </div>
+      </div>
+
+          <div class="destination-card">
+      <div class="destination-image milan"></div>
+      <div class="destination-info">
+        <h4>Milano</h4>
+        <p>da €69</p>
+      </div>
+    </div>
+
+        <div class="destination-card">
+      <div class="destination-image palermo"></div>
+      <div class="destination-info">
+        <h4>Palermo</h4>
+        <p>da €39</p>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <ion-icon name="shield-checkmark"></ion-icon>
+        </div>
+        <h4>Sicurezza Garantita</h4>
+        <p>I più alti standard di sicurezza per ogni volo</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <ion-icon name="time"></ion-icon>
+        </div>
+        <h4>Sempre Puntuali</h4>
+        <p>95% dei nostri voli arriva in orario</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <ion-icon name="heart"></ion-icon>
+        </div>
+        <h4>Comfort Premium</h4>
+        <p>Servizio di qualità per tutti i passeggeri</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="newsletter-section">
+    <div class="newsletter-content">
+      <h3>Resta aggiornato</h3>
+      <p>Ricevi offerte esclusive e aggiornamenti sui nostri voli</p>
+      <div class="newsletter-form">
+        <ion-item class="email-input">
+          <ion-input placeholder="La tua email" type="email" [(ngModel)]="email"></ion-input>
+        </ion-item>
+        <ion-button class="subscribe-btn" [disabled]="!isEmailValid()" (click)="setOpen(true)">
+          Iscriviti
+        </ion-button>
+
+        <ion-alert
+        [isOpen]="isAlertOpen"
+        header="Grazie per esserti iscritto!"
+        subHeader="Ti invieremo un'email non appena ci saranno novità"
+        [buttons]="alertButtons"
+        (didDismiss)="setOpen(false)"
+        ></ion-alert>
+
+      </div>
+    </div>
+  </section>
+</ion-content>

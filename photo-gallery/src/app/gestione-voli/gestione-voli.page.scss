@@ -1,0 +1,438 @@
+//Stile per l'header
+.custom-header {
+  --background: var(--vaygo-white);
+  --border-color: var(--vaygo-border);
+  box-shadow: 0 2px 8px var(--vaygo-shadow);
+  border-bottom: 1px solid var(--vaygo-border);
+
+  ion-toolbar {
+    --background: var(--vaygo-white);
+    --color: var(--vaygo-text-primary);
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --min-height: 56px;
+  }
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+}
+
+.logo-section {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--vaygo-primary);
+    letter-spacing: -0.5px;
+  }
+
+  .logo-subtitle {
+    font-size: 14px;
+    color: var(--vaygo-text-secondary);
+    font-weight: 500;
+  }
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+
+  ion-button {
+    --color: var(--vaygo-text-secondary);
+    --background-hover: var(--vaygo-blue-light);
+    width: 40px;
+    height: 40px;
+    --border-radius: 12px;
+
+    //Ingrandimento e modifica del colore per il bottone e quindi l'icona
+    &:hover {
+      --color: var(--vaygo-primary);
+      transform: scale(1.05);
+      transition: all 0.3s ease;
+    }
+  }
+}
+
+//Container principale
+.gestione-voli-container {
+  min-height: 100vh;
+  background: var(--vaygo-background);
+  padding: 20px;
+}
+
+//Menu di Navigazione
+.voli-navigation-menu {
+  background: var(--vaygo-white);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px var(--vaygo-shadow);
+  margin-bottom: 24px;
+  overflow: hidden;
+
+  .menu-header {
+    background: linear-gradient(135deg, var(--vaygo-primary), var(--vaygo-secondary));
+    padding: 20px;
+    color: var(--vaygo-white);
+    text-align: center;
+
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+  }
+
+  .menu-buttons {
+    display: flex;
+    background: var(--vaygo-white);
+
+    .menu-button {
+      flex: 1;
+      --background: transparent;
+      --color: var(--vaygo-text-secondary);
+      --border-radius: 0;
+      height: 56px;
+      margin: 0;
+      font-weight: 600;
+      text-transform: none;
+      letter-spacing: 0.3px;
+      transition: all 0.3s ease;
+      position: relative;
+
+      &.active {
+        --background: var(--vaygo-blue-light);
+        --color: var(--vaygo-primary);
+      }
+
+      &:hover:not(.active) {
+        --background: var(--vaygo-background);
+        --color: var(--vaygo-text-primary);
+      }
+
+      ion-icon {
+        margin-right: 8px;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+//Container form
+.form-container {
+  background: var(--vaygo-white);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px var(--vaygo-shadow);
+  border: 1px solid var(--vaygo-border);
+  padding: 24px;
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 32px;
+
+    h2 {
+      margin: 0 0 8px 0;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--vaygo-primary);
+      letter-spacing: -0.5px;
+    }
+
+    p {
+      margin: 0;
+      color: var(--vaygo-text-secondary);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+  }
+}
+
+//Sezioni del form
+.form-section {
+  margin-bottom: 32px;
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--vaygo-primary);
+    margin: 0 0 20px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--vaygo-border);
+
+    ion-icon {
+      font-size: 20px;
+      color: var(--vaygo-secondary);
+    }
+  }
+}
+
+//Gruppi di input
+.input-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+
+  &.full-width {
+    grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+// Stili per gli input personalizzati
+.custom-item {
+  --background: var(--vaygo-background);
+  --border-color: var(--vaygo-border);
+  --border-radius: 12px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --min-height: 56px;
+  border: 1px solid var(--vaygo-border);
+  margin: 4px 0;
+  transition: all 0.2s ease;
+
+  &.price-item {
+    background: var(--vaygo-blue-light);
+    border-color: var(--vaygo-primary);
+  }
+
+  &.datetime-item,
+  &.time-item {
+    position: relative;
+  }
+
+  &:focus-within {
+    --border-color: var(--vaygo-secondary);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    transform: translateY(-1px);
+  }
+
+  &.item-has-value {
+    --border-color: var(--vaygo-success);
+
+    &::after {
+      content: '✓';
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--vaygo-success);
+      font-weight: bold;
+      font-size: 16px;
+      z-index: 2;
+    }
+  }
+
+  ion-icon {
+    color: var(--vaygo-text-secondary);
+    margin-right: 12px;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  ion-input,
+  ion-datetime {
+    --color: var(--vaygo-text-primary);
+    --placeholder-color: var(--vaygo-text-secondary);
+    font-weight: 500;
+  }
+
+  ion-datetime {
+    --background: transparent;
+  }
+}
+
+// Pulsanti di azione
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .action-button {
+    flex: 1;
+    height: 48px;
+    font-weight: 600;
+    --border-radius: 12px;
+    max-width: 200px;
+
+    &.primary {
+      --background: linear-gradient(135deg, var(--vaygo-primary), var(--vaygo-secondary));
+      --color: var(--vaygo-white);
+      box-shadow: 0 4px 16px rgba(46, 139, 87, 0.3);
+
+      &:hover:not([disabled]) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(46, 139, 87, 0.4);
+      }
+
+      &[disabled] {
+        --background: var(--vaygo-text-secondary);
+        --color: var(--vaygo-white);
+        opacity: 0.6;
+        box-shadow: none;
+      }
+    }
+
+    &.secondary {
+      --background: transparent;
+      --color: var(--vaygo-primary);
+      --border-color: var(--vaygo-primary);
+      --border-width: 2px;
+
+      &:hover:not([disabled]) {
+        --background: var(--vaygo-blue-light);
+      }
+
+      &[disabled] {
+        --color: var(--vaygo-text-secondary);
+        --border-color: var(--vaygo-text-secondary);
+        opacity: 0.6;
+      }
+    }
+
+    ion-icon {
+      font-size: 18px;
+    }
+  }
+}
+
+// Messaggio di feedback
+.feedback-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 12px;
+  margin-top: 24px;
+  border: 1px solid var(--vaygo-border);
+
+  background: rgba(224, 242, 254, 0.6) !important; //Tema chiaro
+
+  //Override per tema scuro con media query specifica
+  @media (prefers-color-scheme: dark) {
+    background: rgba(30, 58, 138, 0.6) !important; //Tema scuro
+  }
+
+  ion-icon {
+    font-size: 20px;
+    color: var(--vaygo-primary);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  span {
+    font-size: 14px;
+    color: var(--vaygo-text-secondary);
+    font-weight: 500;
+    line-height: 1.4;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+//Gestione schermi più piccoli
+@media (max-width: 768px) {
+  .gestione-voli-container {
+    padding: 16px;
+  }
+
+  .form-container {
+    padding: 20px;
+
+    .section-header {
+      h2 {
+        font-size: 24px;
+      }
+    }
+  }
+
+  .form-section {
+    margin-bottom: 24px;
+
+    .section-title {
+      font-size: 16px;
+      margin-bottom: 16px;
+
+      ion-icon {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .custom-item {
+    --min-height: 48px;
+    --padding-start: 12px;
+    --padding-end: 12px;
+
+    ion-icon {
+      font-size: 18px;
+    }
+  }
+
+  .action-buttons {
+    .action-button {
+      height: 44px;
+      font-size: 14px;
+
+      ion-icon {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+//Stile tema scuro
+@media (prefers-color-scheme: dark) {
+  .custom-header {
+    --background: var(--vaygo-white);
+
+    ion-toolbar {
+      --background: var(--vaygo-white);
+    }
+  }
+
+  .feedback-info {
+    background: rgba(30, 58, 138, 0.6) !important;
+    border-color: var(--vaygo-border);
+
+    &::before {
+      background: var(--vaygo-blue-light);
+    }
+  }
+}
+
+//Stile per l'utente che decide di ridurre le animazioni 
+@media (prefers-reduced-motion: reduce) {
+  .vaygo-fade-in {
+    animation: none;
+  }
+
+  .action-button:hover {
+    transform: none;
+  }
+
+  .custom-item:focus-within {
+    transform: none;
+  }
+}
