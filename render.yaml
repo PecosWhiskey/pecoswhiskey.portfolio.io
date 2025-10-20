@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: pecoswhiskey-backend
+    env: node
+    region: frankfurt  # o oregon se preferisci USA
+    plan: free
+    buildCommand: cd back_end && npm install
+    startCommand: cd back_end && node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+    # Le altre variabili d'ambiente (.env) le configuri manualmente nel dashboard Render

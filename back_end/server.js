@@ -9,14 +9,27 @@ app.use(express.json());
 
 
 const cors = require('cors');
-app.use(cors());
 
+// Configurazione CORS per sviluppo e production
+const allowedOrigins = [
+  'http://localhost:8100',  // Sviluppo locale
+  'https://pecoswhiskey.github.io'  // Production GitHub Pages
+];
 
 app.use(cors({
-  origin: 'http://localhost:8100', 
+  origin: function (origin, callback) {
+    // Permetti richieste senza origin (es. Postman, app mobile)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  exposedHeaders: ['Authorization'] //per esporre l'headers al client nelle risposta
+  exposedHeaders: ['Authorization'], //per esporre l'headers al client nelle risposta
+  credentials: true
 }));
 
 app.use('/api/auth', authRoutes);
